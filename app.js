@@ -3,8 +3,8 @@ const app = express();
 const Sequelize = require('sequelize');
 const underscore = require('underscore');
 const bodyParser = require('body-parser');
-  
-const sequelize = new Sequelize('drivebooth11', 'root', 'root', {
+
+const sequelize = new Sequelize('drivebooth12', 'root', 'root', {
 		host: 'localhost',
 		dialect: 'mysql',
 		pool: {
@@ -16,19 +16,6 @@ const sequelize = new Sequelize('drivebooth11', 'root', 'root', {
 	});
 const moment = require('moment');
 const ssCRUD = require('./utils/sequelize-crud.js');
-
-/*
-app.post('/address/crud', function (req, res) {
-
-sequelize
-.authenticate()
-.then(() => {})
-.catch (err => {
-console.error('Unable to connect to the database:', err);
-});
-
-});
- */
 
 app.use(bodyParser.json());
 
@@ -69,7 +56,6 @@ client.hasOne(contact, {
 	sourceKey: 'Contact_ID'
 });
 
-
 var staff = sequelize.import('./models/staff');
 require('./controllers/staff_controller.js')(app, [staff, contact, address], sequelize, Sequelize, ssCRUD, moment, underscore);
 staff.hasOne(address, {
@@ -85,7 +71,6 @@ staff.hasOne(contact, {
 	sourceKey: 'Contact_ID'
 });
 
- 
 var office_staff = sequelize.import('./models/office_staff');
 require('./controllers/office_staff_controller.js')(app, [office_staff, contact, address, staff], sequelize, Sequelize, ssCRUD, moment, underscore);
 office_staff.hasOne(staff, {
@@ -104,22 +89,20 @@ office_staff.hasOne(contact, {
 	foreignKey: 'Contact_ID',
 	sourceKey: 'Contact_ID'
 });
- 
+
 var client_payment = sequelize.import('./models/client_payment');
 require('./controllers/client_payment_controller.js')(app, [client_payment], sequelize, Sequelize, ssCRUD, moment, underscore);
 client_payment.hasMany(client, {
 	foreignKey: 'Client_ID',
 	sourceKey: 'Client_ID'
 });
- 
+
 var vehicle = sequelize.import('./models/vehicle');
 require('./controllers/vehicle_controller.js')(app, [vehicle], sequelize, Sequelize, ssCRUD, moment);
 office.hasOne(office, {
 	foreignKey: 'Office_ID',
 	sourceKey: 'Office_ID'
 });
-
-
 
 var lessons = sequelize.import('./models/lessons');
 require('./controllers/lessons_controller.js')(app, [lessons, client, address, staff], sequelize, Sequelize, ssCRUD, moment, underscore);

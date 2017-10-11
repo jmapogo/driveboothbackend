@@ -21,6 +21,18 @@ app.post('/address/add', function (req, res) {
 	.authenticate()
 	.then(() => {
 
+/*
+app.post('/address/crud', function (req, res) {
+
+sequelize
+.authenticate()
+.then(() => {})
+.catch (err => {
+console.error('Unable to connect to the database:', err);
+});
+
+});
+ */
 	/*
 		const address = sequelize.define('address', {
 				Address_ID: {
