@@ -19,6 +19,20 @@ const ssCRUD = require('./utils/sequelize-crud.js');
 
 app.use(bodyParser.json());
 
+ 
+
+var cors = require('cors') ;
+app.use(cors());
+
+var options = {
+    origin: '*', // default: '*' 
+    method: 'GET,PUT,POST,DELETE,HEAD,OPTIONS,PATCH', // default: 'GET,PUT,POST,DELETE,HEAD,OPTIONS' 
+    headers: 'Content-Type, Content-Length' // default: 'Content-Type, Authorization, Content-Length, X-Requested-With, X-HTTP-Method-Override' 
+};
+ 
+app.use(require('express-cors-options')(options));
+
+
 var address = sequelize.import('./models/address');
 require('./controllers/address_controller.js')(app, address, sequelize, Sequelize, ssCRUD, moment);
 
@@ -127,6 +141,7 @@ lessons.hasOne(client, {
 //User.belongsTo(Company, {foreignKey: 'fk_companyname', targetKey: 'name'}); // Adds fk_companyname to User
 
 app.listen(3000, function () {
-
-	console.log('Example app listening on port 3000!')
+// Website you wish to allow to connect
+    
+	console.log('Example app listening on port 3000!');
 })

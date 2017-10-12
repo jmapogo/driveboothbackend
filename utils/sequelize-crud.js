@@ -29,7 +29,7 @@ function Controller(Model) {
 	}
 
 	// CRUD methods
-	 
+
 	function getItem(request, response) {
 		var id = request.params.id;
 		// Need 'id' field
@@ -59,15 +59,20 @@ function Controller(Model) {
 	}
 
 	function getItems(request, response) {
+	
+
+		
 		var config = queryHelper.getConfig(request);
 
 		Model
 		.findAndCount(config)
 		.then(function (result) {
+
+			
 			response.json({
 				count: result.count,
 				items: result.rows
-			});
+			}); 
 		})
 		.catch (function (error) {
 			console.log(error.stack);
@@ -81,16 +86,16 @@ function Controller(Model) {
 		console.log(Object.keys(request.body).sort());
 		console.log('');
 		console.log(createMandatoryFields);
-		  
+
 		var config = {};
- 
+
 		if (createMandatoryFields) {
 			for (var i = 0; i < createMandatoryFields.length; i++) {
 				if (request.body[createMandatoryFields[i]] !== undefined) {
 					config[createMandatoryFields[i]] = request.body[createMandatoryFields[i]];
 				} else
 					return response.status(400).json({
-						error: 'Wrong parameters {'+createMandatoryFields[i]+'} {'+[createMandatoryFields[i]] +'}:{'+request.body[createMandatoryFields[i]]+'} '
+						error: 'Wrong parameters {' + createMandatoryFields[i] + '} {' + [createMandatoryFields[i]] + '}:{' + request.body[createMandatoryFields[i]] + '} '
 					});
 			}
 		}
@@ -102,7 +107,7 @@ function Controller(Model) {
 				}
 			}
 		}
- 
+
 		Model
 		.create(config)
 		.then(function (result) {
@@ -221,7 +226,7 @@ function Controller(Model) {
 		getItems: getItems,
 		createItem: createItem,
 		updateItem: updateItem,
-		deleteItem: deleteItem 
+		deleteItem: deleteItem
 	}
 }
 
