@@ -2,37 +2,37 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('address', {
-    Address_ID: {
+    address_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    Line_1_Number_Building: {
+    line_1_number_building: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    Line_2_Number_Street: {
+    line_2_number_street: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    Line_3_Area_Locality: {
+    line_3_area_locality: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    City: {
+    city: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Postal_Code: {
+    postal_code: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Province: {
+    province: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Country: {
+    country: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -49,9 +49,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'address',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'address'
   });
 };

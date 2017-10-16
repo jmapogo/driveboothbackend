@@ -2,12 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ref_job_title', {
-    Job_Title_Code: {
+    job_title_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Job_Title_Description: {
+    job_title_description: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -24,9 +24,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'ref_job_title',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'ref_job_title'
   });
 };

@@ -2,12 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('client_payment', {
-    Date_Of_Payment: {
+    date_of_payment: {
       type: DataTypes.DATE,
       allowNull: false,
       primaryKey: true
     },
-    Payment_Amount: {
+    payment_amount: {
       type: "DOUBLE",
       allowNull: true
     },
@@ -23,27 +23,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Payment_Method_Code: {
+    payment_method_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'ref_payment_method',
-        key: 'Payment_Method_Code'
+        key: 'payment_method_code'
       }
     },
-    Client_ID: {
+    client_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'client',
-        key: 'Client_ID'
+        key: 'client_id'
       }
     }
   }, {
-    tableName: 'client_payment',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'client_payment'
   });
 };

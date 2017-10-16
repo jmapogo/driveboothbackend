@@ -1,0 +1,165 @@
+
+//userse
+
+{
+    "users": {
+        "date_of_birth": "2016-10-20 17:00:00",
+        "first_name": "first_name",
+        "gender": "male",
+        "last_name": "date_of_birth",
+        "middle_name": "date_of_birth",
+        "password": "date_of_birth",
+        "username": "date_of_birth",
+        "office_id": "2ffbfdb1-b02d-11e7-8fcc-d9423feb815e"
+    },
+    "address": {
+        "city": "Line_1_Number_Building 123",
+        "country": "Line_2_Number_Street 123",
+        "line_1_number_building": "Line_3_Area_Locality 123",
+        "line_2_number_street": "City 123",
+        "line_3_area_locality": "Postal_Code 123",
+        "postal_code": "Province 123",
+        "province": "Country 123"
+    },
+    "contact": {
+        "cell": "0000000",
+        "cell_alt": "0000000",
+        "email": "0000000 ",
+        "home_number": "0000000"
+    }
+}
+//client
+{
+    "count": 4,
+    "items": [
+        {
+            "client_id": "5a0ceb32-b039-11e7-b12f-c7bb38a346ec",
+            "date_became_customer": "2016-10-20",
+            "date_last_contact": "2016-10-20",
+            "IsActive": 1,
+            "createdAt": "2017-10-13",
+            "updatedAt": "2017-10-13",
+            "user_id": 24
+        },
+        {
+            "client_id": "5b72bcc2-b039-11e7-b12f-c7bb38a346ec",
+            "date_became_customer": "2016-10-20",
+            "date_last_contact": "2016-10-20",
+            "IsActive": 1,
+            "createdAt": "2017-10-13",
+            "updatedAt": "2017-10-13",
+            "user_id": 26
+        },
+        {
+            "client_id": "5ba2cd72-b039-11e7-b12f-c7bb38a346ec",
+            "date_became_customer": "2016-10-20",
+            "date_last_contact": "2016-10-20",
+            "IsActive": 1,
+            "createdAt": "2017-10-13",
+            "updatedAt": "2017-10-13",
+            "user_id": 28
+        },
+        {
+            "client_id": "5bd01f02-b039-11e7-b12f-c7bb38a346ec",
+            "date_became_customer": "2016-10-20",
+            "date_last_contact": "2016-10-20",
+            "IsActive": 1,
+            "createdAt": "2017-10-13",
+            "updatedAt": "2017-10-13",
+            "user_id": 30
+        }
+    ]
+}
+//staff
+{
+    "users": {
+        "date_of_birth": "2016-10-20 17:00:00",
+        "first_name": "first_name",
+        "gender": "male",
+        "last_name": "date_of_birth",
+        "middle_name": "date_of_birth",
+        "password": "date_of_birth",
+        "username": "date_of_birth",
+        "office_id": "2ffbfdb1-b02d-11e7-8fcc-d9423feb815e"
+    },
+    "address": {
+        "city": "Line_1_Number_Building 123",
+        "country": "Line_2_Number_Street 123",
+        "line_1_number_building": "Line_3_Area_Locality 123",
+        "line_2_number_street": "City 123",
+        "line_3_area_locality": "Postal_Code 123",
+        "postal_code": "Province 123",
+        "province": "Country 123"
+    },
+    "contact": {
+        "cell": "0000000",
+        "cell_alt": "0000000",
+        "email": "0000000 ",
+        "home_number": "0000000"
+    },
+    "staff":
+    {
+    	"date_joined_staff":"2016-10-20 17:00:00",
+    	"date_left_staff":"2016-10-20 17:00:00"
+    }
+    
+}
+//office staff
+{
+    "users": {
+        "date_of_birth": "2016-10-20 17:00:00",
+        "first_name": "first_name",
+        "gender": "male",
+        "last_name": "date_of_birth",
+        "middle_name": "date_of_birth",
+        "password": "date_of_birth",
+        "username": "date_of_birth",
+        "office_id": "2ffbfdb1-b02d-11e7-8fcc-d9423feb815e"
+    },
+    "address": {
+        "city": "Line_1_Number_Building 123",
+        "country": "Line_2_Number_Street 123",
+        "line_1_number_building": "Line_3_Area_Locality 123",
+        "line_2_number_street": "City 123",
+        "line_3_area_locality": "Postal_Code 123",
+        "postal_code": "Province 123",
+        "province": "Country 123"
+    },
+    "contact": {
+        "cell": "0000000",
+        "cell_alt": "0000000",
+        "email": "0000000 ",
+        "home_number": "0000000"
+    },
+    "staff":
+    {
+    	"date_joined_staff":"2016-10-20 17:00:00",
+    	"date_left_staff":"2016-10-20 17:00:00"
+    },
+     "office_staff":
+    {
+    	"date_from":"2016-10-20 17:00:00",
+    	"date_to":"2016-10-20 17:00:00",
+    	 "job_title_code": "3f557df0-b027-11e7-aca6-4fc98d91bd69" ,
+    	 "office_id": "2ffbfdb1-b02d-11e7-8fcc-d9423feb815e"
+    	 
+    }
+    
+}
+//lessons
+{
+    "client_progress_made":"no",
+    "fee":"150",
+     "lesson_datetime":"2016-10-20 17:00:00",
+      "mileage_used":1000,
+      "client_id": "5a0ceb32-b039-11e7-b12f-c7bb38a346ec",
+      "staff_id": "1fdd3802-b03b-11e7-965d-c3eea74ae40f",
+      "lesson_status_code": "c2265f70-b026-11e7-9a60-0bcf2c6c775b",
+       "vehicle_reg_number": "b9228180-b02e-11e7-85de-d5794cc73b73"
+}
+//client payment
+{
+    "payment_amount":500, 
+      "client_id": "5b72bcc2-b039-11e7-b12f-c7bb38a346ec",
+      "payment_method_code": "10b34780-b026-11e7-b2b8-a5d16c8fc867"
+}

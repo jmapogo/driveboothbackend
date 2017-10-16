@@ -1,96 +1,159 @@
-module.exports = function (app, models, sequelize, Sequelize, ssCRUD, moment, underscore) {
+module.exports = function (app, model, sequelize, Sequelize, ssCRUD, moment, mysql, underscore) {
 
-	var Office_Staff = models[0];
+	var office_staff = model[0];
+	var queryHelper;
+	var primary_key = "";
+	var all_columns = underscore.map(office_staff.rawAttributes, function (item) {
+			return item.fieldName;
+		});
+	//var con = mysql.createConnection(sequelize.connectionManager.config );
+	var config = sequelize.connectionManager.config;
+	var con = mysql.createConnection({
+			host: config.host,
+			user: config.username,
+			password: config.password,
+			database: config.database
+		});
 
-	var logController = new ssCRUD.Controller(Office_Staff);
+	var query = " SELECT k.column_name, T.constraint_type ";
+	query += " FROM information_schema.table_constraints t ";
+	query += " JOIN information_schema.key_column_usage k ";
+	query += " USING(constraint_name,table_schema,table_name)  ";
+	query += " WHERE t.table_schema='" + config.database + "' ";
+	query += " AND t.table_name='office_staff' ";
+	query += " AND t.constraint_type='PRIMARY KEY'; ";
 
-	var queryHelper = new ssCRUD.QueryHelper(sequelize,
-			'Office_Staff_ID', //offsetFieldName
-			'Date_From ', //countFieldName
-			'Office_Staff_ID', //searchQFieldName
-			['Office_Staff_ID', 'Date_From', 'Date_To','Job_Title_Code', 'Staff_ID', 'Office_ID', 'Contact_ID', 'Address_ID', 'IsActive', 'createdAt', 'updatedAt'], //arrayWithSearchFields
-			'Office_Staff_ID', //filterFieldName
-			['Office_Staff_ID', 'Date_From', 'Date_To','Job_Title_Code', 'Staff_ID', 'Office_ID', 'Contact_ID', 'Address_ID', 'IsActive', 'createdAt', 'updatedAt']) //arrayWithSearchFields
+	con.connect(function (err) {
+		if (err)
+			throw err;
+		con.query(query, function (err, result, fields) {
+			if (err)
+				throw err;
+			if (result.length > 0) {
+				primary_key = result[0].column_name;
+				queryHelper = new ssCRUD.QueryHelper(sequelize,
+						result[0].column_name, //offsetFieldName
+						result[0].column_name, //countFieldName
+						result[0].column_name, //searchQFieldName
+						all_columns, //arrayWithSearchFields
+						result[0].column_name, //filterFieldName
+						all_columns); //arrayOfAvailableFieldsForFilter
 
-			queryHelper.id = 'Office_Staff_ID';
+				queryHelper.id = result[0].column_name;
 
-			logController
-			.addCreate(
-				['Office_Staff_ID', 'Date_From', 'Date_To','Job_Title_Code', 'Staff_ID', 'Office_ID', 'Contact_ID', 'Address_ID', 'IsActive', 'createdAt', 'updatedAt'], //arrayWithSearchFields
-				[]) // arrayOfNotMandatoryFields
-			.addUpdate(
-				['Office_Staff_ID', 'Date_From', 'Date_To','Job_Title_Code', 'updatedAt'], //arrayWithSearchFields
-				[]) // arrayOfNotMandatoryFields
-			.addQueryHelper(queryHelper);
+				var logController = new ssCRUD.Controller(office_staff);
+				logController
+				.addCreate(
+					underscore.union(all_columns, 'office_id'), // arrayOfMandatoryFields
+					[]) // arrayOfNotMandatoryFields
+				.addUpdate(
+					underscore.without(all_columns, result[0].column_name, 'IsActive', 'createdAt'), // arrayOfMandatoryFields
+					[]) // arrayOfNotMandatoryFields
+				.addQueryHelper(queryHelper);
 
-			app.get('/Office_Staff/:id', logController.getItem);
-			app.patch('/Office_Staff/', function (req, res) {
-				console.log(Office_Staff.rawAttributes);
-				res.json({
-					columns: Office_Staff.rawAttributes
+				app.get('/office_staff/:id', logController.getItem);
+				app.get('/office_staff/', logController.getItems);
+				app.post('/office_staff/', function (req, res) {
+
+					const uuidv1 = require('uuid/v1');
+
+					var address_id = uuidv1();
+					var contact_id = uuidv1();
+					var office_staff_id = uuidv1();
+					var staff_id = uuidv1();
+					var address = model[1];
+					var contact = model[2];
+					var users = model[3];
+					var staff = model[4];
+
+					var users_request = req.body.users;
+					users_request.address_id = address_id;
+					users_request.contact_id = contact_id;
+					users_request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					users_request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					users_request.IsActive = '1';
+
+					var address_request = req.body.address;
+					address_request.address_id = address_id;
+					address_request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					address_request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					address_request.IsActive = '1';
+
+					var contacts_request = req.body.contact;
+					contacts_request.contact_id = contact_id;
+					contacts_request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					contacts_request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+					contacts_request.IsActive = '1';
+
+					address.create(address_request)
+					contact.create(contacts_request)
+					users.create(users_request);
+
+					users.create(users_request).then(user => {
+						// now you see me...
+						//return task.destroy(); 
+						 var staff_request = req.body.staff;
+						staff_request.staff_id = staff_id;
+						staff_request.contact_id = contact_id;
+						staff_request.user_id = user.dataValues.id;
+						staff_request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+						staff_request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+						staff_request.IsActive = '1';
+						staff.create(staff_request);
+
+						var office_staff_request = req.body.office_staff;
+						office_staff_request.office_staff_id = office_staff_id;
+						office_staff_request.contact_id = contact_id; 
+						office_staff_request.staff_id = staff_id; 
+						office_staff_request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+						office_staff_request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+						office_staff_request.IsActive = '1';
+						req.body = office_staff_request;
+						logController.createItem(req, res)
+					})
 				});
-			});
-			app.get('/Office_Staff', logController.getItems);
-			app.post('/Office_Staff', function (req, res) {
+				app.put('/office_staff/:id', function (req, res) {
+					req.body.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
 
-				const uuidv1 = require('uuid/v1');
+					logController.updateItem(req, res);
+				});
+				app.delete ('/office_staff/:id', logController.deleteItem);
+				app.patch('/office_staff/', function (req, res) {
 
-				var Office_Staff_Request = {};
-				var Contact_Request = {};
-				var Address_Request = {};
+					var query = "SELECT   column_name,  ";
+					query += " data_type, character_maximum_length  ";
+					query += " FROM     information_schema.columns  ";
+					query += " WHERE    table_schema='" + sequelize.connectionManager.config.database + "'  ";
+					query += " AND      table_name='office_staff'  ";
+					query += " AND      column_name NOT IN  ";
+					query += " (  ";
+					query += " SELECT k.column_name  ";
+					query += " FROM   information_schema.table_constraints t  ";
+					query += " JOIN   information_schema.key_column_usage k  ";
+					query += " USING (constraint_name,table_schema,table_name)  ";
+					query += " WHERE  t.table_schema='" + sequelize.connectionManager.config.database + "'  ";
+					query += " AND    t.table_name='office_staff')  ";
+					query += " AND      column_name NOT IN ('IsActive',  ";
+					query += " 'updatedAt',  ";
+					query += "  'createdAt')";
+					query += " ORDER BY column_name ASC ";
 
-				var contact = models[1];
-				var address = models[2];
-				var staff = models[3];
+					con.connect(function (err) {
+						con.query(query, function (err, result, fields) {
+							console.log(result);
+							//console.log(fields);
+							res.json(underscore.map(result, function (item) {
+									return item;
+								}));
+						});
+					});
 
-				var Contact_ID = uuidv1();
-				var Address_ID = uuidv1();
-				var Staff_ID = uuidv1();
+				});
 
-				Office_Staff_Request = req.body.office_staff;
-				Office_Staff_Request.Office_Staff_ID = uuidv1();
-				Office_Staff_Request.Contact_ID = Contact_ID;
-				Office_Staff_Request.Address_ID = Address_ID;
-				Office_Staff_Request.Staff_ID = Staff_ID;
-				Office_Staff_Request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Office_Staff_Request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Office_Staff_Request.IsActive = '1';
+			}
 
-				Staff_Request = req.body.staff;
-				Staff_Request.Staff_ID = Staff_ID;
-				Staff_Request.Contact_ID = Contact_ID;
-				Staff_Request.Address_ID = Address_ID;
-				Staff_Request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Staff_Request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Staff_Request.IsActive = '1';
+		});
+	});
 
-				Contact_Request = req.body.contact;
-				Contact_Request.Contact_ID = Contact_ID;
-				Contact_Request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Contact_Request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Contact_Request.IsActive = '1';
-
-				Address_Request = req.body.address;
-				Address_Request.Address_ID = Address_ID;
-				Address_Request.createdAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Address_Request.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-				Address_Request.IsActive = '1';
-
-				req.body = Office_Staff_Request;
-
-				contact.create(Contact_Request);
-				address.create(Address_Request);
-				staff.create(Staff_Request); 
-				logController.createItem(req, res, underscore);
-
-				//logController.createItem(req, res);
-			});
-			app.put('/Office_Staff/:id', function (req, res) {
-				req.body.updatedAt = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-
-				logController.updateItem(req, res);
-			});
-			app.delete ('/Office_Staff/:id', logController.deleteItem);
-
-			return Office_Staff;
+	return office_staff;
 };

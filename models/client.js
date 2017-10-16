@@ -2,41 +2,17 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('client', {
-    Client_ID: {
+    client_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Date_Became_Customer: {
+    date_became_customer: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Date_Last_Contact: {
+    date_last_contact: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    Date_Of_Birth: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    First_Name: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Middle_Name: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Email_Address: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Home_Phone_Number: {
-      type: DataTypes.STRING(20),
-      allowNull: true
-    },
-    Cell_Mobile_Phone_Number: {
-      type: DataTypes.STRING(20),
       allowNull: true
     },
     IsActive: {
@@ -51,34 +27,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Address_ID: {
-      type: DataTypes.STRING(200),
+    user_id: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
-        model: 'address',
-        key: 'Address_ID'
-      }
-    },
-    Office_ID: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      references: {
-        model: 'office',
-        key: 'Office_ID'
-      }
-    },
-    Contact_ID: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      references: {
-        model: 'contact',
-        key: 'Contact_ID'
+        model: 'users',
+        key: 'id'
       }
     }
   }, {
-    tableName: 'client',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'client'
   });
 };

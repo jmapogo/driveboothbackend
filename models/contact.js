@@ -2,20 +2,20 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('contact', {
-    Contact_ID: {
+    contact_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Cell: {
+    cell: {
       type: DataTypes.STRING(20),
       allowNull: true
     },
-    Cell_Alt: {
+    cell_alt: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Email: {
+    email: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -30,11 +30,16 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    home_number: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    work_number: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     }
   }, {
-    tableName: 'contact',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'contact'
   });
 };

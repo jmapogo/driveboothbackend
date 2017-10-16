@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('office', {
-    Office_ID: {
+    office_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
@@ -19,22 +19,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Office_Name: {
+    office_name: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Address_ID: {
+    address_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'address',
-        key: 'Address_ID'
+        key: 'address_id'
       }
     }
   }, {
-    tableName: 'office',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'office'
   });
 };

@@ -2,42 +2,18 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('staff', {
-    Staff_ID: {
+    staff_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    Nickname: {
+    date_joined_staff: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    First_Name: {
+    date_left_staff: {
       type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Middle_Name: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Last_Name: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Date_Of_Birth: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Date_Joined_Staff: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Date_Left_Staff: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    Gender: {
-      type: DataTypes.CHAR(1),
       allowNull: true
     },
     IsActive: {
@@ -52,34 +28,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Office_ID: {
-      type: DataTypes.STRING(200),
+    user_id: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
-        model: 'office',
-        key: 'Office_ID'
-      }
-    },
-    Address_ID: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      references: {
-        model: 'address',
-        key: 'Address_ID'
-      }
-    },
-    Contact_ID: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-      references: {
-        model: 'contact',
-        key: 'Contact_ID'
+        model: 'users',
+        key: 'id'
       }
     }
   }, {
-    tableName: 'staff',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'staff'
   });
 };

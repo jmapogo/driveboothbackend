@@ -2,24 +2,24 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('lessons', {
-    Lesson_ID: {
+    lesson_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Fee: {
-      type: "DOUBLE",
-      allowNull: true
-    },
-    Lesson_DateTime: {
+    lesson_datetime: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Client_Progress_Made: {
+    fee: {
+      type: "DOUBLE",
+      allowNull: true
+    },
+    client_progress_made: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Mileage_Used: {
+    mileage_used: {
       type: "DOUBLE",
       allowNull: true
     },
@@ -35,42 +35,39 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Client_ID: {
+    client_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'client',
-        key: 'Client_ID'
+        key: 'client_id'
       }
     },
-    Staff_ID: {
+    staff_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'staff',
-        key: 'Staff_ID'
+        key: 'staff_id'
       }
     },
-    Lesson_Status_Code: {
+    lesson_status_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'ref_lesson_status',
-        key: 'Lesson_Status_Code'
+        key: 'lesson_status_code'
       }
     },
-    Vehicle_Reg_Number: {
+    vehicle_reg_number: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'vehicle',
-        key: 'Vehicle_Reg_Number'
+        key: 'vehicle_reg_number'
       }
     }
   }, {
-    tableName: 'lessons',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'lessons'
   });
 };

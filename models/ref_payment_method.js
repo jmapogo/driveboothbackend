@@ -2,12 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ref_payment_method', {
-    Payment_Method_Code: {
+    payment_method_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Payment_Method_Description: {
+    payment_method_description: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -24,9 +24,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'ref_payment_method',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'ref_payment_method'
   });
 };

@@ -2,12 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ref_lesson_status', {
-    Lesson_Status_Code: {
+    lesson_status_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Lesson_Status_Description: {
+    lesson_status_description: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -24,9 +24,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'ref_lesson_status',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'ref_lesson_status'
   });
 };

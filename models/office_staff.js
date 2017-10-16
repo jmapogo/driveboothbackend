@@ -2,16 +2,16 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('office_staff', {
-    Office_Staff_ID: {
+    office_staff_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Date_From: {
+    date_from: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Date_To: {
+    date_to: {
       type: DataTypes.DATE,
       allowNull: true
     },
@@ -27,34 +27,31 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Office_ID: {
+    office_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'office',
-        key: 'Office_ID'
+        key: 'office_id'
       }
     },
-    Job_Title_Code: {
+    job_title_code: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'ref_job_title',
-        key: 'Job_Title_Code'
+        key: 'job_title_code'
       }
     },
-    Staff_ID: {
+    staff_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'staff',
-        key: 'Staff_ID'
+        key: 'staff_id'
       }
     }
   }, {
-    tableName: 'office_staff',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'office_staff'
   });
 };

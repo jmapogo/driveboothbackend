@@ -2,20 +2,20 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('vehicle', {
-    Vehicle_Reg_Number: {
+    vehicle_reg_number: {
       type: DataTypes.STRING(200),
       allowNull: false,
       primaryKey: true
     },
-    Make: {
+    make: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Model: {
+    model: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    Type: {
+    type: {
       type: DataTypes.STRING(200),
       allowNull: true
     },
@@ -31,18 +31,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    Office_ID: {
+    office_id: {
       type: DataTypes.STRING(200),
       allowNull: false,
       references: {
         model: 'office',
-        key: 'Office_ID'
+        key: 'office_id'
       }
     }
   }, {
-    tableName: 'vehicle',
-		freezeTableName: true,
-		underscored: true,
-		timestamps: false
+    tableName: 'vehicle'
   });
 };

@@ -12,6 +12,7 @@ function Controller(Model) {
 	// Settings
 
 	function addQueryHelper(queryHelperI) {
+		 
 		queryHelper = queryHelperI;
 		return this;
 	}
@@ -30,7 +31,7 @@ function Controller(Model) {
 
 	// CRUD methods
 
-	function getItem(request, response) {
+	function getItem(request, response, parent) {
 		var id = request.params.id;
 		// Need 'id' field
 		if (!id)
@@ -39,7 +40,7 @@ function Controller(Model) {
 			});
 
 		Model
-		.findById(id)
+		.findById({include: [parent]})
 		.then(function (result) {
 			if (!result)
 				return response.sendStatus(404);
@@ -63,6 +64,8 @@ function Controller(Model) {
 
 		
 		var config = queryHelper.getConfig(request);
+		
+		console.log(  config);
 
 		Model
 		.findAndCount(config)
@@ -125,6 +128,7 @@ function Controller(Model) {
 
 	function updateItem(request, response) {
 		var id = request.params.id;
+		
 		// Need 'id' field
 		if (!id)
 			return response.status(400).json({
@@ -139,7 +143,8 @@ function Controller(Model) {
 					config[updateMandatoryFields[i]] = request.body[updateMandatoryFields[i]];
 				} else
 					return response.status(400).json({
-						error: 'Wrong parameters'
+						//error: 'Wrong parameters'
+						error: 'Wrong parameters {' + updateMandatoryFields[i] + '} {' + [updateMandatoryFields[i]] + '}:{' + request.body[updateMandatoryFields[i]] + '} '
 					});
 			}
 		}

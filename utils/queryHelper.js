@@ -7,7 +7,7 @@
 // sortField - name of q sort field from response query. Example: 'filter'. Field data: 'name' or '-name' etc.
 // sortFields - array of arrays with filter names and table columns. Example: [['name', 'name'], ['createdAt', 'createdAt']] and with relations [['date', '"Orders"."orderDate"']]
 
-module.exports = function(sequelize, offsetF, countF, qF, searchArray, sortFieldF, sortFields) {
+module.exports = function(sequelize, offsetF, countF, qF, searchArray, sortFieldF, sortFields, includes) {
   return {
     getConfig: function(request) {
       var config = {};
@@ -18,7 +18,7 @@ module.exports = function(sequelize, offsetF, countF, qF, searchArray, sortField
       var sortField = request.query[sortFieldF];
 
       config.where = {};
-      config.include = [];
+      config.include = includes;
       // Supports relations or search
       if (q && searchArray.length > 0) {
         config.where.$or = [];
